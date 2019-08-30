@@ -1,4 +1,4 @@
-console.log('Client side JavaScript is loaded!');//fetch is not part of JS but browser base API,not acessible to nodejs
+
 
 const weatherForm = document.querySelector('form');
 const search = document.querySelector('input');
