@@ -1,4 +1,4 @@
-const path = require('path');// no need to install it because it is a core node module ,can be found in doc nodejs
+const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 const forecast = require('./utils/forecast');
@@ -6,21 +6,22 @@ const geocode = require('./utils/geocode');
 
 
 const app = express();
+const port = process.env.PORT || 3000
 
 //Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public');
 const viewsPath = path.join(__dirname, '../templates/views');
-const partialsPath = path.join(__dirname, '../templates/partials');//app.js is the starting point
+const partialsPath = path.join(__dirname, '../templates/partials');
 
 //Setup handlebars engine and views location
 app.set('view engine', 'hbs');
 app.set('views', viewsPath);
-hbs.registerPartials(partialsPath);//going to look for a match for public folder when you do your req
+hbs.registerPartials(partialsPath);/
 
 //Setup static directory to  serve
-app.use(express.static(publicDirectoryPath));//configures express directory.going to find index.html,going to match root url public
+app.use(express.static(publicDirectoryPath));
 
-app.get('', (req, res) => {//leave string empty for homepage
+app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather',
         name: 'Dan'
@@ -71,11 +72,11 @@ app.get('/weather', (req, res) => {
 
 app.get('/products', (req, res) => {
 if(!req.query.search) {
-    return res.send({ //sends json.by using return,we are stopping the whole func execution.no search term,code below wont run
+    return res.send({ 
         error: 'You must provide a search term'
     });
 }
-    console.log(req.query.search);//this is an object
+    console.log(req.query.search);
     res.send({
         products: []
     });
@@ -89,7 +90,7 @@ app.get('/help/*', (req, res) => {
     });
 });
 
-app.get('*', (req, res) => {//*means match anything that wasnt matched so far,this must be put on the end
+app.get('*', (req, res) => {
     res.render('404', {
         title: '404',
         name: 'Gibran',
@@ -97,12 +98,8 @@ app.get('*', (req, res) => {//*means match anything that wasnt matched so far,th
     })
 });
 
-app.listen(3000, () => {
-    console.log('Server is up on port 3000.');
+app.listen(port, () => {
+    console.log('Server is up on port ' + port);
 })
 
 
-
-//app.com
-//app.com/help
-//app.com/about
